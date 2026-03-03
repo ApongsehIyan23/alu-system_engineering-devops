@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Configures a new Ubuntu machine to install nginx with a custom 404 page
+
+apt-get update -y
+apt-get install nginx -y
+
+echo "Holberton School" > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+sed -i 's|\tserver_name _;|\tserver_name _;\n\terror_page 404 /404.html;|' /etc/nginx/sites-available/default
+
+service nginx restart
