@@ -2,8 +2,10 @@
 # Configures a new Ubuntu machine to install and run nginx with a custom index page
 
 apt-get update -y
-apt-get install -y nginx
+apt-get install nginx -y
 
+mkdir -p /var/www/html
 echo "Holberton School" > /var/www/html/index.html
 
+nginx -t
 service nginx restart
