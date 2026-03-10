@@ -13,7 +13,6 @@ ufw allow 'Nginx HTTP' 2>/dev/null || true
 HOSTNAME=$(hostname)
 
 # Configure the custom header in Nginx
-# Add the header inside the http block via the default site config
 NGINX_CONF="/etc/nginx/sites-available/default"
 
 # Insert the custom header into the server block if not already present
