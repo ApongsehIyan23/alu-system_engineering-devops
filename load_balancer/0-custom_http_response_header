@@ -9,3 +9,4 @@ if ! grep -q "X-Served-By" "$NGINX_CONF"; then
 	sed -i "/server_name _;/a \\\tadd_header X-Served-By $HOSTNAME;" "$NGINX_CONF"
 fi
 nginx -t && systemctl restart nginx
+exit 1
