@@ -4,9 +4,15 @@ apt-get update -y
 apt-get install -y nginx
 ufw allow 'Nginx HTTP' 2>/dev/null || true
 HOSTNAME=$(hostname)
-NGINX_CONF="/etc/nginx/sites-available/default"
-if ! grep -q "X-Served-By" "$NGINX_CONF"; then
-	sed -i "/server_name _;/a \\\tadd_header X-Served-By $HOSTNAME;" "$NGINX_CONF"
-fi
+echo "server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	add_header X-Served-By $HOSTNAME;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+}" > /etc/nginx/sites-available/default
 nginx -t && systemctl restart nginx
-exit 1
